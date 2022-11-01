@@ -5,7 +5,7 @@ describe('TodoMVC', function() {
   beforeEach(function() {
     // Load our app before starting each test case
     //cy.viewport(1440, 900)
-    cy.visit('https://bstackdemo.com/')
+    cy.visit('http://localhost:3000/')
     
   })
 
