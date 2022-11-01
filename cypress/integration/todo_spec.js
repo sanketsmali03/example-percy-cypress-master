@@ -1,4 +1,4 @@
-const TEST_WIDTHS = [375, 480, 720, 1280, 1440, 1920];
+const TEST_WIDTHS = [720, 1280, 1920];
 let scrollToBottom = require("scroll-to-bottomjs");
 
 describe('TodoMVC', function() {
@@ -11,12 +11,13 @@ describe('TodoMVC', function() {
 
   it('Loads the TodoMVC app', function() {
     cy.wait(3000);
+    cy.window().then(cyWindow => scrollToBottom({ remoteWindow: cyWindow }));
     cy.percySnapshot("Landing Page ",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
     cy.get('#signin').click();
-    cy.wait(3000);
-   cy.percySnapshot("Login Page",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
+    cy.wait(4000);
     cy.contains('Select Username').type('demouser{enter}');
     cy.contains('Select Password').type('testingisfun99{enter}');
+    cy.percySnapshot("Login Page",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
     cy.get('#login-btn').click();
     cy.wait(3000);
     cy.percySnapshot("HomePage after Login",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
@@ -33,12 +34,15 @@ describe('TodoMVC', function() {
     cy.wait(1000);
     cy.get('#checkout-shipping-continue', { timeout: 30000 }).click();
     cy.get('.button', { timeout: 30000 }).click(); 
-    cy.wait(200);
+    cy.wait(2000);
     cy.percySnapshot("Order details",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
     cy.wait(1000);
     cy.contains('Continue Shopping »').click();
+    cy.wait(3000);
     cy.percySnapshot("Back to HomePage",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
     cy.get('#orders', { timeout: 30000 }).click();
+    cy.window().then(cyWindow => scrollToBottom({ remoteWindow: cyWindow }));
+    cy.wait(3000);
     cy.percySnapshot("Orders",{ widths: TEST_WIDTHS,enableJavaScript: true,minHeight: 2000})
     cy.get('#logout').click();
 
